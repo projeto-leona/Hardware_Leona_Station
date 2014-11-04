@@ -2,15 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.leona</groupId>
-    <artifactId>IteracaoHardware</artifactId>
+    <artifactId>Hardware</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>RecuperadorServico</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -18,9 +13,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>RetrieveServices</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>rxtx</groupId>
             <artifactId>RXTXComm</artifactId>
-            <version>0</version>
+            <version>1</version>
             <type>jar</type>
         </dependency>
     </dependencies>
@@ -29,5 +29,5 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
-    <name>IteracaoHardware</name>
+    <name>Hardware</name>
 </project>

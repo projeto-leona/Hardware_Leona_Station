@@ -6,29 +6,26 @@
 
 package br.leona.hardware.service;
 
-import gnu.io.CommPortIdentifier;
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
-
-import br.leona.hardware.model.Servico;
+import br.leona.hardware.model.Service;
 /**
  *
- * @author Lívia Miura
+ * @author Admin2
  */
-public final class RecuperadorArduino implements RecuperadorServico{        
-    private CommPortIdentifier commPortIdentifier;
+public final class RetrieveServices implements RetrieveService{        
+    //private CommPortIdentifier commPortIdentifier;
     
-    public RecuperadorArduino(){}
+    public RetrieveServices(){}
     
     @Override
-    public Servico getServico() {             
-        Enumeration pList = CommPortIdentifier.getPortIdentifiers();               
-        Servico servico = new Servico();        
-        servico.setNome("Arduino");        
+    public Service getService() {         
+        Service service = new Service();        
+        service.setNome("Arduino");        
+        /*Enumeration pList = CommPortIdentifier.getPortIdentifiers();               
+        
         if(pList.hasMoreElements())  {            
             while (pList.hasMoreElements()) {
                 try {
-                    servico.setStatus("Ativo");                                       
+                    service.setStatus("Ativo");                                       
                     commPortIdentifier = (CommPortIdentifier) pList.nextElement();                     
                     System.out.println("Inicializando Port: " + commPortIdentifier.getName());   
                     if (commPortIdentifier.getPortType() == CommPortIdentifier.PORT_SERIAL) {
@@ -40,13 +37,14 @@ public final class RecuperadorArduino implements RecuperadorServico{
                     }                    
                 } catch (NoSuchElementException n) {
                     System.out.println("CommPortIdentfier: ERROR "+n);
-                    servico.setStatus("Inativo");
+                    service.setStatus("Inativo");
                 }              
             }     
         } else {            
               System.out.println("ERROR CommPortIdentfier: ");
-              servico.setStatus("Inativo");              
-        }        
-        return servico;               
-    }    
+              service.setStatus("Inativo");              
+        }   */     
+        service.setStatus("Inativo");
+        return service;               
+    }   
 }

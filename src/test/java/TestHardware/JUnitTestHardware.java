@@ -7,14 +7,8 @@ package TestHardware;
 
 import br.leona.hardware.model.Arduino;
 import br.leona.hardware.service.Pantilt;
-import br.leona.hardware.model.Service;
 import br.leona.hardware.service.Port;
-import br.leona.hardware.service.RetrieveService;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -58,22 +52,34 @@ public class JUnitTestHardware {
    
     @Test
     public void testMoveLeft() {
-        assertEquals(1, pantilt.moveDirection("50", "LEFT"));
+        for(int i=0; i< 360; i+=10){          
+            String graus = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(graus, "LEFT"));
+        }    
     }    
 
     @Test
     public void testMoveRight() {
-        assertEquals(1, pantilt.moveDirection("50", "RIGHT"));
+         for(int i=0; i< 360; i+=10){          
+            String graus = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(graus, "RIGHT"));
+         }
     }
     
     @Test
     public void testMoveUp() {
-        assertEquals(1, pantilt.moveDirection("50", "UP"));
+         for(int i=0; i< 86; i+=10){          
+            String graus = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(graus, "UP"));
+         }
     }    
 
     @Test
     public void testMoveDown() {
-        assertEquals(1, pantilt.moveDirection("50", "DOWN"));
+         for(int i=0; i< 86; i+=10){          
+            String graus = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(graus, "DOWN"));
+         }
     }
          
     @Test
@@ -95,5 +101,5 @@ public class JUnitTestHardware {
         System.out.println("("+arduino.getService().getName()+", "+arduino.getService().getStatus()+")");
         assertEquals("Ativo", arduino.getService().getStatus());
     }  
-  
+
 }

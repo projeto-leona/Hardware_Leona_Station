@@ -14,9 +14,9 @@ import java.util.NoSuchElementException;
  *
  * @author Admin2
  */
-public final class Port implements RetrieveService{        
+public final class Port implements RetrieveService {        
     private CommPortIdentifier commPortIdentifier;
-    
+    int turnOn = 0;
     public Port(){
     }
     
@@ -37,8 +37,9 @@ public final class Port implements RetrieveService{
                     } else {
                         System.out.println("is an Unknown Port: " + commPortIdentifier);
                     }     
-                    service.setNome(commPortIdentifier.getName());
-                    service.setStatus("Ativo");    
+                    service.setName(commPortIdentifier.getName());
+                    service.setStatus("Ativo");  
+                    turnOn = 1;
                 } catch (NoSuchElementException n) {
                     System.out.println("CommPortIdentfier: ERROR "+n);
                     service.setStatus("Inativo");
@@ -50,4 +51,8 @@ public final class Port implements RetrieveService{
         }   
         return service;               
     }   
+
+    public int turnOn() {
+        return turnOn;
+    }
 }

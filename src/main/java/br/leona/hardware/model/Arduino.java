@@ -25,8 +25,10 @@ public class Arduino  implements RetrieveService {
     private OutputStream serialOut;
     private int rate;
     private String comPort;
-    CommPortIdentifier portId;
+    private CommPortIdentifier portId;
     private Service service;
+    private int turnOn = 0;
+    
 
     /**
      * Construtor da classe ControlePorta
@@ -40,15 +42,15 @@ public class Arduino  implements RetrieveService {
         service = new Service();
         this.comPort = comPort;
         this.rate = rate;
-        initialize();
+        turnOn = initialize();
     }
 
     /**
      * Método que verifica se a comunicação com a porta serial está ok
      */
-    private void initialize() {
+    private int initialize() {
         System.out.println("Arduino.initialize()");
-        service.setNome("Arduino");
+        service.setName("Arduino");
         try {
             /**
              * Define uma variável portId do tipo CommPortIdentifier para
@@ -90,6 +92,7 @@ public class Arduino  implements RetrieveService {
                         SerialPort.DATABITS_8, //taxa de 10 bits 8 (envio)
                         SerialPort.STOPBITS_1, //taxa de 10 bits 1 (recebimento)
                         SerialPort.PARITY_NONE); //receber e enviar dados
+                return 1;
             } catch (UnsupportedCommOperationException ex) {
                 Logger.getLogger(Arduino.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -99,6 +102,7 @@ public class Arduino  implements RetrieveService {
              System.out.println("Não foi possível inicilaizar porta COM: "+exception);
              service.setStatus("Inativo");
         }
+        return 0;
     }
 
     /**
@@ -157,5 +161,9 @@ public class Arduino  implements RetrieveService {
     @Override
     public Service getService() {
         return service;
+    }
+   
+    public int turnOn() {
+        return turnOn;
     }
 }

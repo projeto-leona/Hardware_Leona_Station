@@ -7,9 +7,7 @@ package br.leona.hardware.service;
 
 import br.leona.hardware.model.Arduino;
 import br.leona.hardware.model.Service;
-import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
-import java.io.IOException;
 import java.util.Enumeration;
 
 /**
@@ -28,7 +26,7 @@ public final class Pantilt implements RetrieveService {
         System.out.println("Pantilt.Pantilt()");
         service = new Service(); 
         rate = 9600;
-        port();
+        if(port()!=1) System.out.println("!! port() Falhou !!");
         arduino = new Arduino(comport, rate);
     }
     
@@ -39,9 +37,9 @@ public final class Pantilt implements RetrieveService {
     /*
      * Descobre quais portas de comunicação estão disponíveis
      */
-    public void port() {
+    public int port() {
         System.out.println("Pantilt.Port()");                    
-        service.setNome("Pantilt");    
+        service.setName("Pantilt");    
         try {
             Enumeration pList = CommPortIdentifier.getPortIdentifiers();
             System.out.println("Port =: " + pList.hasMoreElements());
@@ -53,10 +51,12 @@ public final class Pantilt implements RetrieveService {
             }            
             System.out.println("Port is " + comport);            
             service.setStatus("Ativo");
+            return 1;
         } catch (Exception exception) {
            System.out.println(exception);           
            service.setStatus("Inativo");
         }
+        return 0;
     }
    
     public int isOn() {      
@@ -169,7 +169,6 @@ public final class Pantilt implements RetrieveService {
         }      
     }
 
-    @Override
     public Service getService() {  
         return service;
     }

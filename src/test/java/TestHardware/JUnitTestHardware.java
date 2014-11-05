@@ -5,8 +5,10 @@
  */
 package TestHardware;
 
-import br.leona.hardware.model.Pantilt;
+import br.leona.hardware.model.Arduino;
+import br.leona.hardware.service.Pantilt;
 import br.leona.hardware.model.Service;
+import br.leona.hardware.service.Port;
 import br.leona.hardware.service.RetrieveService;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,17 +26,19 @@ import static org.junit.Assert.*;
  *
  * @author Admin_2
  */
-public class JUnitTestHardware {
+public class JUnitTestHardware {   
+    private static Port port;
     private static Pantilt pantilt;
-    private final List<Service> listServices = new ArrayList<Service>();
-    
-    
-    public JUnitTestHardware() {
+    private static Arduino arduino;
+        
+    public JUnitTestHardware() {  
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() {         
+       port = new Port();
        pantilt = new Pantilt();
+       arduino = pantilt.getArduino();
     }
     
     @AfterClass
@@ -51,7 +55,7 @@ public class JUnitTestHardware {
     public void tearDown() {
         assertEquals(1, pantilt.turnOff()); 
     }
-    
+   
     @Test
     public void testMoveLeft() {
         assertEquals(1, pantilt.moveDirection("50", "LEFT"));
@@ -80,45 +84,16 @@ public class JUnitTestHardware {
     @Test
     public void testIsOn() throws IOException {
         assertEquals(1, pantilt.isOn());
-    }    
+    }   
     
-     
     @Test
-    public void testListServicos() { 
-       List<Service> listSet = new ArrayList<Service>();
-       for(int i = 0; i <10; i++){
-           Service service = new Service();
-           service.setNome("service"+(i+1));
-           service.setStatus("status"+(i+1));
-           listSet.add(service);
-       }
-           
-       setListServices(listSet);
-       
-       List<Service> listGet = getListaServicos();
-       
-       for(int i = 0; i == listSet.size(); i++)
-       assertEquals(listSet.get(i).getNome(), listGet.get(i).getNome());
-       
-    } 
-   
-    public void setListServices(List<Service> listServices) {        
-        this.listServices.addAll(listServices);        
-    }
-
-    public List<Service> getListaServicos() {        
-        ServiceLoader<RetrieveService> servLoad = ServiceLoader.load(RetrieveService.class);       
-        Iterator<RetrieveService> iterSL = servLoad.iterator();                   
-        
-        if(servLoad.iterator().hasNext()) {           
-           while(iterSL.hasNext()) {
-               RetrieveService rs = iterSL.next();
-                listServices.add(rs.getService());
-            }            
-        }
-        else System.out.println("ServiceLoader Empty -  ServerServicos.listaServicos()");
-        
-        return listServices;     
-        
-    }
+    public void testGetService() throws IOException {
+        System.out.println("("+port.getService().getName()+", "+port.getService().getStatus()+")");
+        assertEquals("Ativo", port.getService().getStatus());
+        System.out.println("("+pantilt.getService().getName()+", "+pantilt.getService().getStatus()+")");
+        assertEquals("Ativo", pantilt.getService().getStatus());        
+        System.out.println("("+arduino.getService().getName()+", "+arduino.getService().getStatus()+")");
+        assertEquals("Ativo", arduino.getService().getStatus());
+    }  
+  
 }

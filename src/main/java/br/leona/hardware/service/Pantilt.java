@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.leona.hardware.model;
+package br.leona.hardware.service;
 
+import br.leona.hardware.model.Arduino;
+import br.leona.hardware.model.Service;
+import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -12,10 +15,10 @@ import java.util.Enumeration;
 /**
  * @author klauder
  */
-public final class Pantilt {
+public final class Pantilt implements RetrieveService {
     private Service service;
     private Arduino arduino;
-    CommPortIdentifier comPortIdentifier = null;
+    CommPortIdentifier comPortIdentifier;
     private String comport;
     private int rate;
     /**
@@ -23,17 +26,22 @@ public final class Pantilt {
      */
     public Pantilt() {
         System.out.println("Pantilt.Pantilt()");
+        service = new Service(); 
         rate = 9600;
         port();
         arduino = new Arduino(comport, rate);
     }
     
+    public Arduino getArduino(){
+        return arduino;
+    }
     
     /*
      * Descobre quais portas de comunicação estão disponíveis
      */
     public void port() {
-        System.out.println("Pantilt.Port()");
+        System.out.println("Pantilt.Port()");                    
+        service.setNome("Pantilt");    
         try {
             Enumeration pList = CommPortIdentifier.getPortIdentifiers();
             System.out.println("Port =: " + pList.hasMoreElements());
@@ -42,14 +50,16 @@ public final class Pantilt {
                 comPortIdentifier = (CommPortIdentifier) pList.nextElement();
                 System.out.println("Ports " + comPortIdentifier.getName() + " ");
                 comport = comPortIdentifier.getName();
-            }
-            System.out.println("Port is " + comport);
+            }            
+            System.out.println("Port is " + comport);            
+            service.setStatus("Ativo");
         } catch (Exception exception) {
-           System.out.println(exception);
+           System.out.println(exception);           
+           service.setStatus("Inativo");
         }
     }
    
-    public int isOn() throws IOException {      
+    public int isOn() {      
         System.out.println("Pantilt.isOn()");
         return arduino.isOn();            
     }
@@ -73,7 +83,7 @@ public final class Pantilt {
         return arduino.sendData("!111S*");             
     }
 
-    public int moveDirection(String degrees, String direction) throws NumberFormatException {
+    public int moveDirection(String degrees, String direction) {
         System.out.println("Pantilt.moveDirection(String graus, String direcao)"); 
         int typedDegrees = Integer.parseInt(degrees);      
         System.out.println("Graus = "+ typedDegrees);
@@ -157,5 +167,10 @@ public final class Pantilt {
             System.out.println("LEFT > 100 = " + left);
             return arduino.sendData(left);
         }      
+    }
+
+    @Override
+    public Service getService() {  
+        return service;
     }
 }

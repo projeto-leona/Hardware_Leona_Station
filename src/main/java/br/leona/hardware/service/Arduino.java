@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.leona.hardware.model;
+package br.leona.hardware.service;
 
+import br.leona.hardware.model.Service;
 import br.leona.hardware.model.Service;
 import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
@@ -19,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Admin2
+ * @author Admin_2
  */
 public class Arduino  implements RetrieveService {
     private OutputStream serialOut;
@@ -45,6 +46,11 @@ public class Arduino  implements RetrieveService {
         turnOn = initialize();
     }
 
+    @Override
+    public Service getService() {
+        return service;
+    }
+   
     /**
      * Método que verifica se a comunicação com a porta serial está ok
      */
@@ -158,11 +164,6 @@ public class Arduino  implements RetrieveService {
         return 1;
     }
 
-    @Override
-    public Service getService() {
-        return service;
-    }
-   
     public int turnOn() {
         return turnOn;
     }

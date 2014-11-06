@@ -7,6 +7,7 @@
 package br.leona.hardware.service;
 
 import br.leona.hardware.model.Service;
+import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -16,13 +17,20 @@ import java.util.NoSuchElementException;
  */
 public final class Port implements RetrieveService {        
     private CommPortIdentifier commPortIdentifier;
+    private Service service;
     int turnOn = 0;
+    
     public Port(){
+        service = new Service();
+        initialize();
     }
     
     @Override
-    public Service getService() {           
-        Service service = new Service(); 
+    public Service getService() {  
+        return service;
+    }
+    
+    public void initialize(){
         Enumeration pList = CommPortIdentifier.getPortIdentifiers();               
         
         if(pList.hasMoreElements())  {            
@@ -38,8 +46,7 @@ public final class Port implements RetrieveService {
                         System.out.println("is an Unknown Port: " + commPortIdentifier);
                     }     
                     service.setName(commPortIdentifier.getName());
-                    service.setStatus("Ativo");  
-                    turnOn = 1;
+                    service.setStatus("Ativo"); 
                 } catch (NoSuchElementException n) {
                     System.out.println("CommPortIdentfier: ERROR "+n);
                     service.setStatus("Inativo");
@@ -48,8 +55,7 @@ public final class Port implements RetrieveService {
         } else {            
               System.out.println("ERROR CommPortIdentfier: ");
               service.setStatus("Inativo");              
-        }   
-        return service;               
+        }            
     }   
 
     public int turnOn() {

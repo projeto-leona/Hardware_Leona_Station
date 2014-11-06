@@ -5,13 +5,13 @@
  */
 package br.leona.hardware.service;
 
-import br.leona.hardware.model.Arduino;
 import br.leona.hardware.model.Service;
+import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 
 /**
- * @author klauder
+ * @author Admin_2
  */
 public final class Pantilt implements RetrieveService {
     private Service service;
@@ -28,6 +28,11 @@ public final class Pantilt implements RetrieveService {
         rate = 9600;
         if(port()!=1) System.out.println("!! port() Falhou !!");
         arduino = new Arduino(comport, rate);
+    }
+    
+    @Override
+    public Service getService() {  
+        return service;
     }
     
     public Arduino getArduino(){
@@ -167,9 +172,5 @@ public final class Pantilt implements RetrieveService {
             System.out.println("LEFT > 100 = " + left);
             return arduino.sendData(left);
         }      
-    }
-
-    public Service getService() {  
-        return service;
     }
 }

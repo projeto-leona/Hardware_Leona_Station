@@ -5,7 +5,7 @@
  */
 package TestHardware;
 
-import br.leona.hardware.model.Arduino;
+import br.leona.hardware.service.Arduino;
 import br.leona.hardware.service.Pantilt;
 import br.leona.hardware.service.Port;
 import java.io.IOException;
@@ -53,32 +53,32 @@ public class JUnitTestHardware {
     @Test
     public void testMoveLeft() {
         for(int i=0; i< 360; i+=10){          
-            String graus = new Integer(i).toString();
-            assertEquals(1, pantilt.moveDirection(graus, "LEFT"));
+            String degrees = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(degrees, "LEFT"));
         }    
     }    
 
     @Test
     public void testMoveRight() {
          for(int i=0; i< 360; i+=10){          
-            String graus = new Integer(i).toString();
-            assertEquals(1, pantilt.moveDirection(graus, "RIGHT"));
+            String degrees = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(degrees, "RIGHT"));
          }
     }
     
     @Test
     public void testMoveUp() {
          for(int i=0; i< 86; i+=10){          
-            String graus = new Integer(i).toString();
-            assertEquals(1, pantilt.moveDirection(graus, "UP"));
+            String degrees = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(degrees, "UP"));
          }
     }    
 
     @Test
     public void testMoveDown() {
          for(int i=0; i< 86; i+=10){          
-            String graus = new Integer(i).toString();
-            assertEquals(1, pantilt.moveDirection(graus, "DOWN"));
+            String degrees = new Integer(i).toString();
+            assertEquals(1, pantilt.moveDirection(degrees, "DOWN"));
          }
     }
          

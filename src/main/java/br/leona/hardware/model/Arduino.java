@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.leona.hardware.service;
+package br.leona.hardware.model;
 
-import br.leona.hardware.model.Service;
 import br.leona.hardware.model.Service;
 import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
@@ -43,7 +42,7 @@ public class Arduino  implements RetrieveService {
         service = new Service();
         this.comPort = comPort;
         this.rate = rate;
-        turnOn = initialize();
+        initialize();
     }
 
     @Override
@@ -98,6 +97,7 @@ public class Arduino  implements RetrieveService {
                         SerialPort.DATABITS_8, //taxa de 10 bits 8 (envio)
                         SerialPort.STOPBITS_1, //taxa de 10 bits 1 (recebimento)
                         SerialPort.PARITY_NONE); //receber e enviar dados
+                turnOn = 1;
                 return 1;
             } catch (UnsupportedCommOperationException ex) {
                 Logger.getLogger(Arduino.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,6 +119,7 @@ public class Arduino  implements RetrieveService {
         System.out.println("Arduino.close()");
         try {
             serialOut.close();
+            turnOn = 0;
             return 1;
         } catch (IOException exception) {
             System.out.println("Não foi possível fechar porta COM: "+exception);
@@ -148,8 +149,7 @@ public class Arduino  implements RetrieveService {
 
             byte[] bytes = command.getBytes();
 
-            serialOut.write(bytes);
-            
+            serialOut.write(bytes);            
             return 1;
 
         } catch (IOException exception) {
@@ -161,10 +161,6 @@ public class Arduino  implements RetrieveService {
     
     public int isOn(){
         System.out.println("Arduino.isOn()");
-        return 1;
-    }
-
-    public int turnOn() {
         return turnOn;
     }
 }

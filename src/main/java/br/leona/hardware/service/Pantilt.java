@@ -5,6 +5,7 @@
  */
 package br.leona.hardware.service;
 
+import br.leona.hardware.model.Arduino;
 import br.leona.hardware.model.Service;
 import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;

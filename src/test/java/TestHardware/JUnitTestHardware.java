@@ -5,7 +5,7 @@
  */
 package TestHardware;
 
-import br.leona.hardware.service.Arduino;
+import br.leona.hardware.model.Arduino;
 import br.leona.hardware.service.Pantilt;
 import br.leona.hardware.service.Port;
 import java.io.IOException;
@@ -42,14 +42,22 @@ public class JUnitTestHardware {
     
     @Before
     public void setUp() {
-        assertEquals(1, pantilt.turnOn());
+        testTurnOn();
     }
     
     @After
     public void tearDown() {
-        assertEquals(1, pantilt.turnOff()); 
+        testTurnOff();
     }
    
+    public void testTurnOn() {
+        assertEquals(1, pantilt.turnOff()); 
+    }   
+   
+    public void testTurnOff() {
+        assertEquals(1, pantilt.turnOff()); 
+    }   
+    
     @Test
     public void testMoveLeft() {
         for(int i=0; i< 360; i+=10){          
@@ -57,7 +65,7 @@ public class JUnitTestHardware {
             assertEquals(1, pantilt.moveDirection(degrees, "LEFT"));
         }    
     }    
-
+    
     @Test
     public void testMoveRight() {
          for(int i=0; i< 360; i+=10){          
@@ -88,12 +96,12 @@ public class JUnitTestHardware {
     }
         
     @Test
-    public void testIsOn() throws IOException {
+    public void testIsOn() {
         assertEquals(1, pantilt.isOn());
     }   
-    
+   
     @Test
-    public void testGetService() throws IOException {
+    public void testGetService() {
         System.out.println("("+port.getService().getName()+", "+port.getService().getStatus()+")");
         assertEquals("Ativo", port.getService().getStatus());
         System.out.println("("+pantilt.getService().getName()+", "+pantilt.getService().getStatus()+")");

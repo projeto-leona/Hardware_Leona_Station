@@ -13,7 +13,7 @@ import java.util.Enumeration;
 /**
  * @author Admin_2
  */
-public final class Pantilt implements RetrieveService {
+public class Pantilt implements RetrieveService {
     private Service service;
     private Arduino arduino;
     CommPortIdentifier comPortIdentifier;

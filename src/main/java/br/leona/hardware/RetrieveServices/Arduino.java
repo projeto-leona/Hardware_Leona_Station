@@ -27,7 +27,7 @@ public class Arduino  implements RetrieveService {
     private String comPort;
     private CommPortIdentifier portId;
     private Service service;
-    private int turnOn = 0;
+    private int isOn = 0;
     private String ServiceType = "Arduino";
    
 
@@ -103,7 +103,7 @@ public class Arduino  implements RetrieveService {
                         SerialPort.DATABITS_8, //taxa de 10 bits 8 (envio)
                         SerialPort.STOPBITS_1, //taxa de 10 bits 1 (recebimento)
                         SerialPort.PARITY_NONE); //receber e enviar dados
-                turnOn = 1;
+                isOn = 1;
                 return 1;
             } catch (UnsupportedCommOperationException ex) {
                 Logger.getLogger(Arduino.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,7 +125,7 @@ public class Arduino  implements RetrieveService {
         System.out.println("Arduino.close()");
         try {
             serialOut.close();
-            turnOn = 0;
+            isOn = 0;
             return 1;
         } catch (IOException exception) {
             System.out.println("Não foi possível fechar porta COM: "+exception);
@@ -165,7 +165,7 @@ public class Arduino  implements RetrieveService {
     
     public int isOn(){
         System.out.println("Arduino.isOn()");
-        return turnOn;
+        return isOn;
     }
     
 }

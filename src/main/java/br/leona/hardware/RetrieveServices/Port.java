@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
  *
  * @author Admin2
  */
-public final class Port implements RetrieveService {        
+public class Port implements RetrieveService {        
     private CommPortIdentifier commPortIdentifier;
     private Service service;
     int turnOn = 0;

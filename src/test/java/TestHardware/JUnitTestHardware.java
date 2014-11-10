@@ -61,7 +61,7 @@ public class JUnitTestHardware {
     @Test
     public void testMoveLeft() {
         for(int i=0; i< 360; i+=10){          
-            String degrees = new Integer(i).toString();
+            String degrees = Integer.toString(i);
             assertEquals(1, pantilt.moveDirection(degrees, "LEFT"));
         }    
     }    
@@ -69,7 +69,7 @@ public class JUnitTestHardware {
     @Test
     public void testMoveRight() {
          for(int i=0; i< 360; i+=10){          
-            String degrees = new Integer(i).toString();
+            String degrees = Integer.toString(i);
             assertEquals(1, pantilt.moveDirection(degrees, "RIGHT"));
          }
     }
@@ -77,7 +77,7 @@ public class JUnitTestHardware {
     @Test
     public void testMoveUp() {
          for(int i=0; i< 86; i+=10){          
-            String degrees = new Integer(i).toString();
+            String degrees = Integer.toString(i);
             assertEquals(1, pantilt.moveDirection(degrees, "UP"));
          }
     }    
@@ -85,7 +85,7 @@ public class JUnitTestHardware {
     @Test
     public void testMoveDown() {
          for(int i=0; i< 86; i+=10){          
-            String degrees = new Integer(i).toString();
+            String degrees = Integer.toString(i);
             assertEquals(1, pantilt.moveDirection(degrees, "DOWN"));
          }
     }

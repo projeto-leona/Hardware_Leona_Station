@@ -13,9 +13,9 @@ import br.leona.hardware.model.Service;
  */
 public interface RetrieveService {
      
-    abstract Service getService();
+    Service getService();
     
-    abstract String getServiceType();
+    String getServiceType();
     
     
 }

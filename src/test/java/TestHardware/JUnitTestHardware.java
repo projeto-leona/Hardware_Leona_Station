@@ -5,9 +5,9 @@
  */
 package TestHardware;
 
-import br.leona.hardware.model.Arduino;
-import br.leona.hardware.service.Pantilt;
-import br.leona.hardware.service.Port;
+import br.leona.hardware.RetrieveServices.Arduino;
+import br.leona.hardware.RetrieveServices.Pantilt;
+import br.leona.hardware.RetrieveServices.Port;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;

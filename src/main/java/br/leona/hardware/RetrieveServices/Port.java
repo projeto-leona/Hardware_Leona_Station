@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package br.leona.hardware.service;
+package br.leona.hardware.RetrieveServices;
 
+import br.leona.hardware.RetrieveServices.RetrieveService;
 import br.leona.hardware.model.Service;
-import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -19,7 +19,8 @@ public final class Port implements RetrieveService {
     private CommPortIdentifier commPortIdentifier;
     private Service service;
     int turnOn = 0;
-    
+    private String ServiceType = "Port";
+   
     public Port(){
         service = new Service();
         initialize();
@@ -28,6 +29,11 @@ public final class Port implements RetrieveService {
     @Override
     public Service getService() {  
         return service;
+    }
+    
+    @Override
+    public String getServiceType() {
+        return ServiceType;
     }
     
     public void initialize(){

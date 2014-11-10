@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.leona.hardware.service;
+package br.leona.hardware.RetrieveServices;
 
-import br.leona.hardware.model.Arduino;
+import br.leona.hardware.RetrieveServices.RetrieveService;
 import br.leona.hardware.model.Service;
-import br.leona.hardware.service.RetrieveService;
 import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 
@@ -20,6 +19,9 @@ public final class Pantilt implements RetrieveService {
     CommPortIdentifier comPortIdentifier;
     private String comport;
     private int rate;
+    private String ServiceType = "Arduino";
+
+       
     /**
      * Construtor da classe Arduino
      */
@@ -34,6 +36,11 @@ public final class Pantilt implements RetrieveService {
     @Override
     public Service getService() {  
         return service;
+    }
+
+    @Override
+     public String getServiceType() {
+        return ServiceType;
     }
     
     public Arduino getArduino(){

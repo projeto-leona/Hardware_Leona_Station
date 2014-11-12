@@ -5,10 +5,12 @@
  */
 package TestHardware;
 
-import br.leona.hardware.RetrieveServices.Arduino;
-import br.leona.hardware.RetrieveServices.Pantilt;
-import br.leona.hardware.RetrieveServices.Port;
+import br.leona.hardware.services.Arduino;
+import br.leona.hardware.services.Pantilt;
+import br.leona.hardware.services.Port;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,27 +38,60 @@ public class JUnitTestHardware {
     }
     
     @AfterClass
-    public static void tearDownClass() {   
-       pantilt.close();
+    public static void tearDownClass() {  
     }
     
     @Before
     public void setUp() {
         testTurnOn();
+        testIsOn();
     }
     
     @After
-    public void tearDown() {
-        testTurnOff();
+    public void tearDown() {   
+        testTurnOff();  
+        testIsOff();
+        try {
+            testReset();
+        } catch (IOException ex) {
+            Logger.getLogger(JUnitTestHardware.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        testIsOn();
+        /*
+        try {
+            testClose();
+            testIsOff();
+        } catch (IOException ex) {
+            Logger.getLogger(JUnitTestHardware.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                */
     }
+              
+    //@Test
+    public void testIsOn() {
+        assertEquals(1, pantilt.isOn());
+    }   
    
+    public void testIsOff() {
+        assertEquals(0, pantilt.isOn());
+    }   
+     
     public void testTurnOn() {
-        assertEquals(1, pantilt.turnOff()); 
+        assertEquals(1, pantilt.turnOn()); 
     }   
    
     public void testTurnOff() {
-        assertEquals(1, pantilt.turnOff()); 
-    }   
+        assertEquals(1, pantilt.turnOff());
+    }  
+      
+    //@Test
+    public void testReset() throws IOException {
+        assertEquals(1, pantilt.reset()); 
+    }
+    
+    public void testClose() throws IOException {
+        assertEquals(1, pantilt.close()); 
+    }     
     
     @Test
     public void testMoveLeft() {
@@ -88,26 +123,19 @@ public class JUnitTestHardware {
             String degrees = Integer.toString(i);
             assertEquals(1, pantilt.moveDirection(degrees, "DOWN"));
          }
-    }
-         
-    @Test
-    public void testReset() throws IOException {
-        assertEquals(1, pantilt.reset());
-    }
-        
-    @Test
-    public void testIsOn() {
-        assertEquals(1, pantilt.isOn());
-    }   
-   
+    } 
+    
     @Test
     public void testGetService() {
+        System.out.println("("+port.getServiceType()+")");
         System.out.println("("+port.getService().getName()+", "+port.getService().getStatus()+")");
         assertEquals("Ativo", port.getService().getStatus());
+        System.out.println("("+pantilt.getServiceType()+")");
         System.out.println("("+pantilt.getService().getName()+", "+pantilt.getService().getStatus()+")");
-        assertEquals("Ativo", pantilt.getService().getStatus());        
+        assertEquals("Ativo", pantilt.getService().getStatus());    
+        System.out.println("("+arduino.getServiceType()+")");
         System.out.println("("+arduino.getService().getName()+", "+arduino.getService().getStatus()+")");
         assertEquals("Ativo", arduino.getService().getStatus());
-    }  
-
+    } 
+    
 }
